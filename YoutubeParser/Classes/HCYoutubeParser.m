@@ -46,7 +46,7 @@
 - (NSString *)stringByDecodingURLFormat {
     NSString *result = [self stringByReplacingOccurrencesOfString:@"+" withString:@" "];
     result = [result stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    return result ?: @"";
+    return result;
 }
 
 - (NSMutableDictionary *)dictionaryFromQueryStringComponents {
@@ -61,6 +61,10 @@
 
         NSString *key = [[keyValueArray objectAtIndex:0] stringByDecodingURLFormat];
         NSString *value = [[keyValueArray objectAtIndex:1] stringByDecodingURLFormat];
+        
+        if (!key || !value) {
+            continue;
+        }
 
         NSMutableArray *results = [parameters objectForKey:key];
 
